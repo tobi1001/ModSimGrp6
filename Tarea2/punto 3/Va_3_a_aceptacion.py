@@ -15,7 +15,7 @@ def aceptacion_rechazo(n):
         u2 = np.random.uniform(0, 1) 
         y = 2*u1 - 1
         
-        if u2 <= y**2:
+        if u2 <= y**2:   # Se acepta Y si u2 <= Y**2, de lo contrario se vuelve a generar dos numeros aleatorios
             variables_aleatorias.append(y)
     
     return variables_aleatorias
