@@ -7,12 +7,13 @@ np.random.seed(SEED)
 print(f"Usando semilla: {SEED}")
 
 class Taqueria:
-    def __init__(self, tiempo_simulacion):
+    def __init__(self, dias_simulacion):
 
         # Parametros de entrada
-        self.tiempo_simulacion = tiempo_simulacion # Tiempo que dura la simulación en minutos
-        self.num_mesas_2 = 4 # Numero de mesas con capacidad para 2 personas
-        self.num_mesas_4 = 2 # Numero de mesas con capacidad para 4 personas
+        self.dias_simulacion = dias_simulacion # Tiempo que dura la simulación en minutos
+        self.tiempo_simulacion = 60 * 24 * self.dias_simulacion # 60 min/hor * 24 horas ~ 1 dia en minutos
+        self.num_mesas_2 = 5 # Numero de mesas con capacidad para 2 personas
+        self.num_mesas_4 = 3 # Numero de mesas con capacidad para 4 personas
         self.precio_orden = 400 # Precio por orden
         self.costo_orden = 200 # Costo por orden
         self.salario_mesero = 3000 / 60 # Salario del mesero por minuto
@@ -29,6 +30,7 @@ class Taqueria:
         self.tiempo_total_llegadas = 0
         self.grupos_mesa_inmediata = 0
 
+
     def main(self):
 
         # Ejecutar la simulación
@@ -37,21 +39,8 @@ class Taqueria:
         self.mesas_4 = simpy.Resource(self.env, capacity=self.num_mesas_4)
         self.env.process(self.generar_clientes())
         self.env.run(until=self.tiempo_simulacion)
-
-        # Crear lista para almacenar la utilidad acumulada en cada minuto
-        self.utilidad_acumulada = []
-
-        # Ejecutar la simulación
-        self.env = simpy.Environment()
-        self.mesas_2 = simpy.Resource(self.env, capacity=self.num_mesas_2)
-        self.mesas_4 = simpy.Resource(self.env, capacity=self.num_mesas_4)
-        self.env.process(self.generar_clientes())
-        
-        # Registrar la utilidad acumulada en cada minuto
-        for i in range(1, self.tiempo_simulacion + 1):
-            self.env.run(until=i)
-            utilidad_actual = self.utilidad_total - (self.salario_mesero * i)
-            self.utilidad_acumulada.append(utilidad_actual)
+            
+        self.estadisticas()
 
     def cliente(self):  # Proceso que simula un cliente
 
@@ -59,10 +48,9 @@ class Taqueria:
         # LLegada #
         ###########
         tamano_grupo = self.generar_tamano_grupo()  # Genera el tamaño del grupo
-
         tiempo_comida_grupo = 0.0 # Tiempo que más tarda la persona en comer (máx tiempos)
-
         utilidad_grupo = 0.0
+
         for _ in range(tamano_grupo):
             num_ordenes = self.generar_numero_ordenes_por_persona() # Numero de ordenes que pedira esta persona
             tiempo = 0.0 # el tiempo total que se demorara comiendo
@@ -73,16 +61,14 @@ class Taqueria:
             tiempo_comida_grupo = max(tiempo_comida_grupo,tiempo) # comparamos contra el maximo, dejamos el mayor
 
         mesas = self.mesas_2 if tamano_grupo <= 2 else self.mesas_4 # Elegimos el conjunto de mesas apropiado
-        
         mesa_req = mesas.request()
-
         llegada = self.env.now # Establece el tiempo de llegada del cliente
 
         ##########
         # Espera #
         ##########
 
-        yield mesa_req  # Esperamos hasta que haya una mesa libre (que se cumpla la reques por la mesa)
+        yield mesa_req  # Esperamos hasta que haya una mesa libre (que se cumpla la request por la mesa)
 
         tiempo_espera = self.env.now - llegada
         if tiempo_espera == 0:
@@ -125,7 +111,9 @@ class Taqueria:
         tiempo_promedio_llegadas = self.tiempo_total_llegadas / self.grupos_totales
         probabilidad_sin_mesa = (self.grupos_totales - self.grupos_mesa_inmediata)/self.grupos_totales
 
-        print(f"Utilidad total: ${utilidad_total}")
+        print(f"Simulación taquería Paco´s Taco, Promedio de {self.dias_simulacion} días")
+        print ("-" * 40)
+        print(f"Utilidad total: ${utilidad_total/self.dias_simulacion}")
         print(f"Probabilidad de no encontrar mesa disponible: {probabilidad_sin_mesa:.2%}")
         print(f"Número máximo de grupos en la cola: {self.max_grupos_cola}")
         print(f"Tiempo promedio de espera en la cola: {tiempo_promedio_espera:.2f} minutos")
@@ -134,8 +122,8 @@ class Taqueria:
         print(f"Tiempo entre llegadas promedio: {tiempo_promedio_llegadas:.2f} minutos")
 
         # Intervalo de confianza del 95% para la probabilidad de no encontrar mesa
-        n = self.grupos_totales
-        p = (self.grupos_totales - self.grupos_mesa_inmediata)
+        n = self.grupos_totales / self.dias_simulacion
+        p = (self.grupos_totales - self.grupos_mesa_inmediata) / self.dias_simulacion
         z = 1.96  # Valor crítico para un nivel de confianza del 95%
         proporcion = p/n
 
@@ -163,15 +151,6 @@ class Taqueria:
         plt.ylim(0, 1)  # Límites del eje y entre 0 y 1
         plt.show()
 
-        # Utilidad acumulada
-        plt.figure(figsize=(8, 6))
-        plt.plot(range(TIEMPO_SIMULACION), self.utilidad_acumulada)
-        plt.xlabel('Tiempo (minutos)')
-        plt.ylabel('Utilidad acumulada')
-        plt.title('Utilidad acumulada a lo largo del tiempo')
-        plt.grid(True)
-        plt.show()
-
     def generar_tiempo_entre_llegada(self): # Tiempo entre llegadas de los clientes (Con el método de transformada inversa)
         u = np.random.uniform(0, 1)
         return (-6 * np.log(1 - u))
@@ -186,7 +165,8 @@ class Taqueria:
         return np.random.choice([10, 15, 20, 25], p = [0.1, 0.4, 0.3, 0.2])
 
 
-TIEMPO_SIMULACION = 60 * 24 # 60 min/hor * 24 horas ~ 1 dia en minutos
-model = Taqueria(TIEMPO_SIMULACION)
+
+DIAS_SIMULACIÓN = 100 # Número de dias que dura la simulación
+model = Taqueria(DIAS_SIMULACIÓN)
 model.main()
-model.estadisticas()
+
