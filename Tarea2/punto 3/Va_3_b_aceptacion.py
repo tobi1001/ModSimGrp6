@@ -13,14 +13,14 @@ def aceptacion_rechazo(a, n):
         u1 = np.random.uniform(0, 1)
         u2 = np.random.uniform(0, 1)
 
-        if u1 <= a:
+        if u1 <= a:  # dependiendo u1, se le asigna un valor de Y
             y = u1/a
         elif u1 <= 1 - a:
             y = 1
         else:
             y = (1-u1)/a
 
-        if u2 <= y:
+        if u2 <= y: # Si u2 <= y, entonces se agrega u1 a las variables aleatorias, de lo contrario vuelve al inicio
             variables_aleatorias.append(u1)
 
 
