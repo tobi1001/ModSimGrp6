@@ -9,21 +9,21 @@ def funcion_densidad(x, a):
 
 def aceptacion_rechazo(a, n):
     variables_aleatorias = []
-      
     while len(variables_aleatorias) < n:
         u1 = np.random.uniform(0, 1)
         u2 = np.random.uniform(0, 1)
-        
+
         if u1 <= a:
-            if u2 <= u1/a:
-                variables_aleatorias.append(u2)
-        elif u1 <= 1-a:
-            if u2 <= 1:
-                variables_aleatorias.append(u2)
+            y = u1/a
+        elif u1 <= 1 - a:
+            y = 1
         else:
-            if u2 <= (1-u1)/a:
-                variables_aleatorias.append(u2)
-    
+            y = (1-u1)/a
+
+        if u2 <= y:
+            variables_aleatorias.append(u1)
+
+
     return variables_aleatorias
 
 a = 0.3
