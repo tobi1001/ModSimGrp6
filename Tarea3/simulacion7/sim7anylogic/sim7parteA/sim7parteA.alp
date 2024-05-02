@@ -7,7 +7,7 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1714673008349</Id>
-	<Name><![CDATA[sim7parteA_versionFinal]]></Name>
+	<Name><![CDATA[sim7parteA]]></Name>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[sim7parteaversion2]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -522,6 +522,15 @@
 										</GenericParameterSubstituteReference>
 									</GenericParameterSubstitute>
 									<Parameters>
+										<Parameter>
+											<Name><![CDATA[tipo_de_transaccion]]></Name>
+										</Parameter>
+										<Parameter>
+											<Name><![CDATA[tiempo_de_servicio]]></Name>
+										</Parameter>
+										<Parameter>
+											<Name><![CDATA[tiempo_de_llegada]]></Name>
+										</Parameter>
 									</Parameters>
 									<ReplicationFlag>true</ReplicationFlag>
 									<Replication Class="CodeValue">
@@ -1021,6 +1030,15 @@ clientes_atendidos+=1;]]></Code>
 										</GenericParameterSubstituteReference>
 									</GenericParameterSubstitute>
 									<Parameters>
+										<Parameter>
+											<Name><![CDATA[tipo_de_transaccion]]></Name>
+										</Parameter>
+										<Parameter>
+											<Name><![CDATA[tiempo_de_servicio]]></Name>
+										</Parameter>
+										<Parameter>
+											<Name><![CDATA[tiempo_de_llegada]]></Name>
+										</Parameter>
 									</Parameters>
 									<ReplicationFlag>true</ReplicationFlag>
 									<Replication Class="CodeValue">
@@ -1342,7 +1360,7 @@ clientes_atendidos+=1;]]></Code>
 						<ColorHighPercent>-8097537</ColorHighPercent>
 						<ColorMean>-12799119</ColorMean>
 						<LineWidth>1</LineWidth>						
-						<Title><![CDATA[Tiempos de espera en fila]]></Title>							
+						<Title><![CDATA[Minutos de espera en fila]]></Title>							
 					</HistogramDataExpression>
     			</Histogram>
     			<Histogram>
@@ -1406,7 +1424,7 @@ clientes_atendidos+=1;]]></Code>
 						<ColorHighPercent>-60269</ColorHighPercent>
 						<ColorMean>-16777216</ColorMean>
 						<LineWidth>1</LineWidth>						
-						<Title><![CDATA[Tiempo entre llegadas]]></Title>							
+						<Title><![CDATA[Segundos entre llegadas]]></Title>							
 					</HistogramDataExpression>
     			</Histogram>
 				<Text>

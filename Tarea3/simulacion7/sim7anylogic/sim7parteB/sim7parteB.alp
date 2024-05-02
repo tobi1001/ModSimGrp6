@@ -11,28 +11,6 @@
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[simulacion7b]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
-	<OptionLists>
-		<OptionList>
-			<Id>1713364017759</Id>
-			<Name><![CDATA[Transaccion]]></Name>
-			<Option>
-				<Id>1713364017760</Id>
-				<Name><![CDATA[t_1]]></Name>
-			</Option>
-			<Option>
-				<Id>1713364017761</Id>
-				<Name><![CDATA[t_2]]></Name>
-			</Option>
-			<Option>
-				<Id>1713364017762</Id>
-				<Name><![CDATA[t_3]]></Name>
-			</Option>
-			<Option>
-				<Id>1713364017763</Id>
-				<Name><![CDATA[t_4]]></Name>
-			</Option>
-		</OptionList>
-	</OptionLists>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -133,7 +111,7 @@
 				<Variable Class="PlainVariable">
 					<Id>1714063337689</Id>
 					<Name><![CDATA[fila_elegida]]></Name>
-					<X>40</X><Y>110</Y>
+					<X>30</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -145,12 +123,42 @@
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714682715469</Id>
+					<Name><![CDATA[clientes_atendidos]]></Name>
+					<X>30</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714682844138</Id>
+					<Name><![CDATA[ultima_llegada]]></Name>
+					<X>30</X><Y>680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 			</Variables>
 			<Connectors>
 				<Connector>
 					<Id>1713470223618</Id>
 					<Name><![CDATA[connector]]></Name>
-					<X>360</X><Y>50</Y>
+					<X>320</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -183,7 +191,7 @@
 				<Connector>
 					<Id>1713470254283</Id>
 					<Name><![CDATA[connector1]]></Name>
-					<X>360</X><Y>120</Y>
+					<X>320</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -216,7 +224,7 @@
 				<Connector>
 					<Id>1713470265808</Id>
 					<Name><![CDATA[connector2]]></Name>
-					<X>360</X><Y>190</Y>
+					<X>320</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -249,7 +257,7 @@
 				<Connector>
 					<Id>1713470311926</Id>
 					<Name><![CDATA[connector3]]></Name>
-					<X>360</X><Y>260</Y>
+					<X>320</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -282,7 +290,7 @@
 				<Connector>
 					<Id>1713470325546</Id>
 					<Name><![CDATA[connector4]]></Name>
-					<X>360</X><Y>330</Y>
+					<X>320</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -315,7 +323,7 @@
 				<Connector>
 					<Id>1713470335153</Id>
 					<Name><![CDATA[connector5]]></Name>
-					<X>360</X><Y>400</Y>
+					<X>320</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -348,7 +356,7 @@
 				<Connector>
 					<Id>1713470912443</Id>
 					<Name><![CDATA[connector13]]></Name>
-					<X>400</X><Y>50</Y>
+					<X>360</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -383,7 +391,7 @@
 				<Connector>
 					<Id>1713470939190</Id>
 					<Name><![CDATA[connector14]]></Name>
-					<X>400</X><Y>120</Y>
+					<X>360</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -418,7 +426,7 @@
 				<Connector>
 					<Id>1713470948100</Id>
 					<Name><![CDATA[connector15]]></Name>
-					<X>400</X><Y>190</Y>
+					<X>360</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -453,7 +461,7 @@
 				<Connector>
 					<Id>1713470973621</Id>
 					<Name><![CDATA[connector16]]></Name>
-					<X>400</X><Y>260</Y>
+					<X>360</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -488,7 +496,7 @@
 				<Connector>
 					<Id>1713470982366</Id>
 					<Name><![CDATA[connector17]]></Name>
-					<X>400</X><Y>330</Y>
+					<X>360</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -523,7 +531,7 @@
 				<Connector>
 					<Id>1713470989830</Id>
 					<Name><![CDATA[connector18]]></Name>
-					<X>400</X><Y>400</Y>
+					<X>360</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -558,7 +566,7 @@
 				<Connector>
 					<Id>1713893116087</Id>
 					<Name><![CDATA[connector6]]></Name>
-					<X>110</X><Y>220</Y>
+					<X>70</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -591,7 +599,7 @@
 				<Connector>
 					<Id>1713893409457</Id>
 					<Name><![CDATA[connector22]]></Name>
-					<X>130</X><Y>280</Y>
+					<X>90</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -624,7 +632,7 @@
 				<Connector>
 					<Id>1713893533573</Id>
 					<Name><![CDATA[connector24]]></Name>
-					<X>0</X><Y>0</Y>
+					<X>-40</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -657,7 +665,7 @@
 				<Connector>
 					<Id>1713893563769</Id>
 					<Name><![CDATA[connector26]]></Name>
-					<X>150</X><Y>340</Y>
+					<X>110</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -690,7 +698,7 @@
 				<Connector>
 					<Id>1713893778574</Id>
 					<Name><![CDATA[connector7]]></Name>
-					<X>130</X><Y>220</Y>
+					<X>90</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -725,7 +733,7 @@
 				<Connector>
 					<Id>1713893790224</Id>
 					<Name><![CDATA[connector8]]></Name>
-					<X>290</X><Y>120</Y>
+					<X>250</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -760,7 +768,7 @@
 				<Connector>
 					<Id>1713893798041</Id>
 					<Name><![CDATA[connector9]]></Name>
-					<X>290</X><Y>190</Y>
+					<X>250</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -795,7 +803,7 @@
 				<Connector>
 					<Id>1713893807315</Id>
 					<Name><![CDATA[connector10]]></Name>
-					<X>290</X><Y>260</Y>
+					<X>250</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -830,7 +838,7 @@
 				<Connector>
 					<Id>1713893816277</Id>
 					<Name><![CDATA[connector11]]></Name>
-					<X>290</X><Y>330</Y>
+					<X>250</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -865,7 +873,7 @@
 				<Connector>
 					<Id>1713893822920</Id>
 					<Name><![CDATA[connector12]]></Name>
-					<X>290</X><Y>400</Y>
+					<X>250</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -899,7 +907,7 @@
 				<Connector>
 					<Id>1713893972789</Id>
 					<Name><![CDATA[connector19]]></Name>
-					<X>120</X><Y>230</Y>
+					<X>80</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -936,7 +944,7 @@
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1713468483392</Id>
 					<Name><![CDATA[fila_mas_corta]]></Name>
-					<X>40</X><Y>50</Y>
+					<X>30</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -981,13 +989,13 @@ return indiceColaMasCorta;]]></Body>
 				<CustomDistribution>
 					<Id>1713363476125</Id>
 					<Name><![CDATA[elegir_transaccion]]></Name>
-					<X>40</X><Y>20</Y>
+					<X>30</X><Y>90</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Type>DISCRETE</Type>
-					<DefinitionType>OPTIONS</DefinitionType>
+					<DefinitionType>FREQUENCY_TABLE</DefinitionType>
 					<IntegerValues>false</IntegerValues>
 					<Static>false</Static>
 					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
@@ -1022,25 +1030,17 @@ return indiceColaMasCorta;]]></Body>
 						</OptionColumnReference>
 						<WeightColumnReference>
 						</WeightColumnReference>
-					</OptionQuery>										
-					<OptionListID><![CDATA[1713364017759]]></OptionListID>
-					<OptionValues>
-						<OptionValue>						
-							<OptionID><![CDATA[1713364017760]]></OptionID>
-							<Value><![CDATA[0.15]]></Value>
-						</OptionValue>
-						<OptionValue>						
-							<OptionID><![CDATA[1713364017761]]></OptionID>
-							<Value><![CDATA[0.29]]></Value>
-						</OptionValue>
-						<OptionValue>						
-							<OptionID><![CDATA[1713364017762]]></OptionID>
-							<Value><![CDATA[0.32]]></Value>
-						</OptionValue>
-						<OptionValue>						
-							<OptionID><![CDATA[1713364017763]]></OptionID>
-							<Value><![CDATA[0.24]]></Value>
-						</OptionValue>				
+					</OptionQuery>					
+					<Argument><![CDATA[1.0]]></Argument>
+					<Argument><![CDATA[2.0]]></Argument>
+					<Argument><![CDATA[3.0]]></Argument>
+					<Argument><![CDATA[4.0]]></Argument>
+					<Value><![CDATA[0.15]]></Value>
+					<Value><![CDATA[0.29]]></Value>
+					<Value><![CDATA[0.32]]></Value>
+					<Value><![CDATA[0.24]]></Value>					
+					<OptionListID><![CDATA[0]]></OptionListID>
+					<OptionValues>				
 					</OptionValues>				
 				</CustomDistribution>		
 			</CustomDistributions>
@@ -1048,7 +1048,69 @@ return indiceColaMasCorta;]]></Body>
     			<HistogramData>
 					<Id>1714662976380</Id>
 					<Name><![CDATA[tiempos_espera]]></Name>
-					<X>550</X><Y>40</Y>
+					<X>510</X><Y>220</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1714723200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+					<Value><![CDATA[]]></Value>
+					<NumberOfIntervals>10</NumberOfIntervals>
+					<MinMaxAutodetect>true</MinMaxAutodetect>
+					<RangeMinExpression><![CDATA[0]]></RangeMinExpression>
+					<RangeMaxExpression><![CDATA[1]]></RangeMaxExpression>
+					<InitialIntervalSize><![CDATA[0.1]]></InitialIntervalSize>
+					<CalculateCDF>true</CalculateCDF>
+					<CalculatePercentiles>false</CalculatePercentiles>
+					<LowPercent>10</LowPercent>
+					<HighPercent>10</HighPercent>
+					<Title><![CDATA[]]></Title>
+				</HistogramData>
+    			<HistogramData>
+					<Id>1714682922065</Id>
+					<Name><![CDATA[tipo_transaccion]]></Name>
+					<X>250</X><Y>720</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1714723200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+					<Value><![CDATA[]]></Value>
+					<NumberOfIntervals>10</NumberOfIntervals>
+					<MinMaxAutodetect>true</MinMaxAutodetect>
+					<RangeMinExpression><![CDATA[0]]></RangeMinExpression>
+					<RangeMaxExpression><![CDATA[1]]></RangeMaxExpression>
+					<InitialIntervalSize><![CDATA[0.1]]></InitialIntervalSize>
+					<CalculateCDF>true</CalculateCDF>
+					<CalculatePercentiles>false</CalculatePercentiles>
+					<LowPercent>10</LowPercent>
+					<HighPercent>10</HighPercent>
+					<Title><![CDATA[]]></Title>
+				</HistogramData>
+    			<HistogramData>
+					<Id>1714682922068</Id>
+					<Name><![CDATA[interarrival_times]]></Name>
+					<X>30</X><Y>720</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1103,7 +1165,7 @@ return indiceColaMasCorta;]]></Body>
 				<EmbeddedObject>
 					<Id>1713360916425</Id>
 					<Name><![CDATA[Llegadas]]></Name>
-					<X>60</X><Y>210</Y>
+					<X>20</X><Y>390</Y>
 					<Label><X>-5</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1139,12 +1201,15 @@ return indiceColaMasCorta;]]></Body>
 						<Parameter>
 							<Name><![CDATA[interarrivalTime]]></Name>
 							<Value Class="CodeUnitValue">
-								<Code><![CDATA[exponential( 20 )]]></Code>
+								<Code><![CDATA[(-20)*log(1-uniform(0,1))]]></Code>
 								<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
 							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[firstArrivalMode]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[self.AT_START]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[firstArrivalTime]]></Name>
@@ -1247,6 +1312,9 @@ return indiceColaMasCorta;]]></Body>
 										<Parameter>
 											<Name><![CDATA[fila_de_cajero]]></Name>
 										</Parameter>
+										<Parameter>
+											<Name><![CDATA[tiempo_de_llegada]]></Name>
+										</Parameter>
 									</Parameters>
 									<ReplicationFlag>true</ReplicationFlag>
 									<Replication Class="CodeValue">
@@ -1328,23 +1396,25 @@ return indiceColaMasCorta;]]></Body>
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[agent.tiempo_de_llegada=time(MINUTE);
+								<Code><![CDATA[interarrival_times.add(time(SECOND)-ultima_llegada);
+ultima_llegada=time(SECOND);
 
-fila_elegida=fila_mas_corta();
 
-agent.tipo_de_transaccion=elegir_transaccion();
+agent.tiempo_de_llegada=time(MINUTE);
 
-if(agent.tipo_de_transaccion==t_1){
-agent.tiempo_de_servicio=exponential(45, 0);
-};
-if(agent.tipo_de_transaccion==t_2){
-agent.tiempo_de_servicio=exponential(75, 0);
-};
-if(agent.tipo_de_transaccion==t_3){
-agent.tiempo_de_servicio=exponential(120, 0);
-};
-if(agent.tipo_de_transaccion==t_4){
-agent.tiempo_de_servicio=exponential(180, 0);
+agent.tipo_de_transaccion=(int) elegir_transaccion();
+
+if(agent.tipo_de_transaccion==1){
+agent.tiempo_de_servicio=(-45)*log(1-uniform(0,1));
+}
+if(agent.tipo_de_transaccion==2){
+agent.tiempo_de_servicio=(-75)*log(1-uniform(0,1));
+}
+if(agent.tipo_de_transaccion==3){
+agent.tiempo_de_servicio=(-120)*log(1-uniform(0,1));
+}
+if(agent.tipo_de_transaccion==4){
+agent.tiempo_de_servicio=(-180)*log(1-uniform(0,1));
 }]]></Code>
 							</Value>
 						</Parameter>
@@ -1394,7 +1464,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470197265</Id>
 					<Name><![CDATA[cola1]]></Name>
-					<X>290</X><Y>30</Y>
+					<X>250</X><Y>210</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1459,7 +1529,11 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[tiempos_espera.add(time(MINUTE)-agent.tiempo_de_llegada)]]></Code>
+								<Code><![CDATA[tipo_transaccion.add(agent.tipo_de_transaccion);
+
+tiempos_espera.add(agent.time(MINUTE)-agent.tiempo_de_llegada);
+
+clientes_atendidos+=1;]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -1514,7 +1588,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470221325</Id>
 					<Name><![CDATA[delay1]]></Name>
-					<X>360</X><Y>30</Y>
+					<X>320</X><Y>210</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1617,7 +1691,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470254248</Id>
 					<Name><![CDATA[cola2]]></Name>
-					<X>290</X><Y>100</Y>
+					<X>250</X><Y>280</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1682,7 +1756,11 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[tiempos_espera.add(time(MINUTE)-agent.tiempo_de_llegada)]]></Code>
+								<Code><![CDATA[tipo_transaccion.add(agent.tipo_de_transaccion);
+
+tiempos_espera.add(agent.time(MINUTE)-agent.tiempo_de_llegada);
+
+clientes_atendidos+=1;]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -1737,7 +1815,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470254269</Id>
 					<Name><![CDATA[delay2]]></Name>
-					<X>360</X><Y>100</Y>
+					<X>320</X><Y>280</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1840,7 +1918,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470265773</Id>
 					<Name><![CDATA[cola3]]></Name>
-					<X>290</X><Y>170</Y>
+					<X>250</X><Y>350</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1905,7 +1983,11 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[tiempos_espera.add(time(MINUTE)-agent.tiempo_de_llegada)]]></Code>
+								<Code><![CDATA[tipo_transaccion.add(agent.tipo_de_transaccion);
+
+tiempos_espera.add(agent.time(MINUTE)-agent.tiempo_de_llegada);
+
+clientes_atendidos+=1;]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -1960,7 +2042,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470265794</Id>
 					<Name><![CDATA[delay3]]></Name>
-					<X>360</X><Y>170</Y>
+					<X>320</X><Y>350</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2063,7 +2145,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470311891</Id>
 					<Name><![CDATA[cola4]]></Name>
-					<X>290</X><Y>240</Y>
+					<X>250</X><Y>420</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2128,7 +2210,11 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[tiempos_espera.add(time(MINUTE)-agent.tiempo_de_llegada)]]></Code>
+								<Code><![CDATA[tipo_transaccion.add(agent.tipo_de_transaccion);
+
+tiempos_espera.add(agent.time(MINUTE)-agent.tiempo_de_llegada);
+
+clientes_atendidos+=1;]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -2183,7 +2269,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470311912</Id>
 					<Name><![CDATA[delay4]]></Name>
-					<X>360</X><Y>240</Y>
+					<X>320</X><Y>420</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2286,7 +2372,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470325511</Id>
 					<Name><![CDATA[cola5]]></Name>
-					<X>290</X><Y>310</Y>
+					<X>250</X><Y>490</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2351,7 +2437,11 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[tiempos_espera.add(time(MINUTE)-agent.tiempo_de_llegada)]]></Code>
+								<Code><![CDATA[tipo_transaccion.add(agent.tipo_de_transaccion);
+
+tiempos_espera.add(agent.time(MINUTE)-agent.tiempo_de_llegada);
+
+clientes_atendidos+=1;]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -2406,7 +2496,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470325532</Id>
 					<Name><![CDATA[delay5]]></Name>
-					<X>360</X><Y>310</Y>
+					<X>320</X><Y>490</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2509,7 +2599,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470335118</Id>
 					<Name><![CDATA[cola6]]></Name>
-					<X>290</X><Y>380</Y>
+					<X>250</X><Y>560</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2574,7 +2664,11 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[tiempos_espera.add(time(MINUTE)-agent.tiempo_de_llegada)]]></Code>
+								<Code><![CDATA[tipo_transaccion.add(agent.tipo_de_transaccion);
+
+tiempos_espera.add(agent.time(MINUTE)-agent.tiempo_de_llegada);
+
+clientes_atendidos+=1;]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -2629,7 +2723,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470335139</Id>
 					<Name><![CDATA[delay6]]></Name>
-					<X>360</X><Y>380</Y>
+					<X>320</X><Y>560</Y>
 					<Label><X>-5</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2729,7 +2823,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713470860228</Id>
 					<Name><![CDATA[Salida]]></Name>
-					<X>460</X><Y>220</Y>
+					<X>420</X><Y>400</Y>
 					<Label><X>-10</X><Y>-20</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2795,7 +2889,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713893114186</Id>
 					<Name><![CDATA[selectOutput]]></Name>
-					<X>100</X><Y>210</Y>
+					<X>60</X><Y>390</Y>
 					<Label><X>-35</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2832,6 +2926,9 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[fila_elegida=fila_mas_corta();]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onExitTrue]]></Name>
@@ -2882,7 +2979,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713893312609</Id>
 					<Name><![CDATA[selectOutput1]]></Name>
-					<X>110</X><Y>240</Y>
+					<X>70</X><Y>420</Y>
 					<Label><X>-35</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2969,7 +3066,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713893391916</Id>
 					<Name><![CDATA[selectOutput2]]></Name>
-					<X>120</X><Y>270</Y>
+					<X>80</X><Y>450</Y>
 					<Label><X>-35</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3056,7 +3153,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713893531509</Id>
 					<Name><![CDATA[selectOutput3]]></Name>
-					<X>130</X><Y>300</Y>
+					<X>90</X><Y>480</Y>
 					<Label><X>-35</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3143,7 +3240,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 				<EmbeddedObject>
 					<Id>1713893561472</Id>
 					<Name><![CDATA[selectOutput4]]></Name>
-					<X>140</X><Y>330</Y>
+					<X>100</X><Y>510</Y>
 					<Label><X>-35</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3246,7 +3343,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
     			<Histogram>
 					<Id>1714663240491</Id>
 					<Name><![CDATA[chart]]></Name>
-					<X>540</X><Y>90</Y>
+					<X>500</X><Y>230</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3305,6 +3402,221 @@ agent.tiempo_de_servicio=exponential(180, 0);
 						<ColorMean>-12799119</ColorMean>
 						<LineWidth>1</LineWidth>						
 						<Title><![CDATA[Tiempos de espera en fila]]></Title>							
+					</HistogramDataExpression>
+    			</Histogram>
+				<Text>
+					<Id>1714682539199</Id>
+					<Name><![CDATA[Título]]></Name>
+					<X>20</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[MODELO BANCO - ALTERNATIVA  B]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1714682788216</Id>
+					<Name><![CDATA[Resultados]]></Name>
+					<X>500</X><Y>180</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Resultados:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1714682807742</Id>
+					<Name><![CDATA[Resultados1]]></Name>
+					<X>20</X><Y>630</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Comprobación de las estadísticas dadas en el enunciado:]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Line>
+					<Id>1714682820032</Id>
+					<Name><![CDATA[line]]></Name>
+					<X>20</X><Y>620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>780</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+    			<Histogram>
+					<Id>1714682922058</Id>
+					<Name><![CDATA[transaccion1]]></Name>
+					<X>0</X><Y>720</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1714723200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>190</Width>
+					<Height>140</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>110</Width>
+						<Height>50</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<ShowPDF>true</ShowPDF>
+					<ShowCDF>false</ShowCDF>
+					<ShowMean>true</ShowMean>
+					<Bars>
+						<Direction>UP</Direction>
+						<RelativeWidth>0.8</RelativeWidth>
+					</Bars>
+					<HistogramDataExpression>
+					<Id>1714682922055</Id>
+					<Expression><![CDATA[interarrival_times]]></Expression>
+						<ColorPDF>-5952982</ColorPDF>
+						<ColorCDF>-2987746</ColorCDF>
+						<ColorLowPercent>-10496</ColorLowPercent>
+						<ColorHighPercent>-60269</ColorHighPercent>
+						<ColorMean>-16777216</ColorMean>
+						<LineWidth>1</LineWidth>						
+						<Title><![CDATA[Segundos entre llegadas]]></Title>							
+					</HistogramDataExpression>
+    			</Histogram>
+    			<Histogram>
+					<Id>1714682922062</Id>
+					<Name><![CDATA[transaccion3]]></Name>
+					<X>220</X><Y>720</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1714723200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>190</Width>
+					<Height>140</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>110</Width>
+						<Height>50</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<ShowPDF>true</ShowPDF>
+					<ShowCDF>false</ShowCDF>
+					<ShowMean>true</ShowMean>
+					<Bars>
+						<Direction>UP</Direction>
+						<RelativeWidth>0.8</RelativeWidth>
+					</Bars>
+					<HistogramDataExpression>
+					<Id>1714682922059</Id>
+					<Expression><![CDATA[tipo_transaccion]]></Expression>
+						<ColorPDF>-6632142</ColorPDF>
+						<ColorCDF>-2987746</ColorCDF>
+						<ColorLowPercent>-10496</ColorLowPercent>
+						<ColorHighPercent>-60269</ColorHighPercent>
+						<ColorMean>-16777216</ColorMean>
+						<LineWidth>1</LineWidth>						
+						<Title><![CDATA[Tipos de transacción]]></Title>							
 					</HistogramDataExpression>
     			</Histogram>
 			</Presentation>
@@ -3418,7 +3730,7 @@ agent.tiempo_de_servicio=exponential(180, 0);
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[Transaccion]]></Type>
+						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
