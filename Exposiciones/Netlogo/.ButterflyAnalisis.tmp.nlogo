@@ -1,13 +1,9 @@
-globals [ q x0 y0]
+; globals [ q x0 y0] ; User input
 patches-own [ elevation used? ]; used: alguna mariposa ha estado allí?
 turtles-own [  start-patch ]
 
 to setup
   clear-all
-
-  ; Asignar centro de la región inicial para crear las mariposas
-  set x0 105
-  set y0 135
 
   ; Asignar elevación de cada patch mediante archivo
   file-open "ElevationData.txt"
@@ -59,9 +55,6 @@ to setup
     set start-patch patch-here
   ]
 
-  ; Inicializar el parametro "q"
-  set q 0.4
-
   reset-ticks
 end ; del setup
 
@@ -76,7 +69,7 @@ to go
 
     ; Exportar a csv los datos  de Corridor Width
     export-plot "Corridor Width"
-    ;word "Corridor-output-for-q-" q
+    word "Corridor-output-for-q-" q
 
     stop
   ]
@@ -132,10 +125,10 @@ end
 
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-668
-469
+364
+62
+822
+521
 -1
 -1
 3.0
@@ -159,10 +152,10 @@ ticks
 30.0
 
 BUTTON
-101
-92
-164
-125
+99
+267
+162
+300
 NIL
 go
 T
@@ -176,10 +169,10 @@ NIL
 1
 
 BUTTON
-14
-92
-77
-125
+18
+267
+81
+300
 NIL
 setup
 NIL
@@ -193,17 +186,17 @@ NIL
 1
 
 OUTPUT
-688
-379
-884
-418
+18
+507
+214
+546
 10
 
 PLOT
-688
-221
-882
-371
+19
+348
+213
+498
 Corridor Width
 Tick
 NIL
@@ -216,6 +209,103 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" ""
+
+TEXTBOX
+21
+20
+405
+56
+Butterfly Hilltopping Model
+25
+0.0
+1
+
+TEXTBOX
+160
+93
+292
+132
+Butterflies will appear \nwithin a 10x10 area\naround your chosen point.
+10
+0.0
+1
+
+INPUTBOX
+21
+83
+71
+143
+x0
+120.2
+1
+0
+Number
+
+INPUTBOX
+83
+84
+133
+144
+y0
+98.0
+1
+0
+Number
+
+TEXTBOX
+22
+60
+378
+99
+1. Type in an X and Y coordinate (both between 0 and 149):
+10
+0.0
+1
+
+TEXTBOX
+20
+232
+290
+261
+2. Press the \"Setup\" button to load the model.\n3. Press the \"Go\" button to run it (press again to pause it).
+10
+0.0
+0
+
+TEXTBOX
+20
+160
+355
+199
+2. Set a Q value (probability of moving to the highest neighbor patch):
+10
+0.0
+1
+
+SLIDER
+18
+182
+190
+215
+q
+q
+0
+1
+0.8
+0.1
+1
+NIL
+HORIZONTAL
+
+TEXTBOX
+19
+325
+169
+344
+View Results
+15
+0.0
+1
 
 @#$#@#$#@
 # Butterfly Model ODD Description
