@@ -42,10 +42,17 @@ end ; del setup
 
 to go
   ask turtles [move]
+  plot corridor-width
   tick
   if ticks >= 1000
   [ let final-corridor-width corridor-width
-    stop ]
+
+    ; Exportar a csv los datos  de Corridor Width
+    export-plot "Corridor Width"
+    word "Corridor-output-for-q-" q
+
+    stop
+  ]
 end
 
 to-report corridor-width
@@ -135,11 +142,29 @@ NIL
 1
 
 OUTPUT
-15
-169
-195
-223
+688
+379
+884
+418
 10
+
+PLOT
+688
+221
+882
+371
+Corridor Width
+Tick
+NIL
+0.0
+1000.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" ""
 
 @#$#@#$#@
 # Butterfly Model ODD Description
