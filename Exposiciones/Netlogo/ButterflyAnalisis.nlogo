@@ -1,32 +1,59 @@
-globals [ q ]
+globals [ q x0 y0]
 patches-own [ elevation used? ]; used: alguna mariposa ha estado allí?
 turtles-own [  start-patch ]
 
 to setup
   clear-all
-  ; Asignar elevacion de cada patch
-  ask patches
-  [ ; La primera colina se encuentra en (30, 30) con altura 100
-    ; La segunda se ubica en (120, 100) y su altura es 50
-    ; The first hill is 100 units high.
 
-    let elev1 100 - distancexy 30 30
-    let elev2 50 - distancexy 120 100
+  ; Asignar centro de la región inicial para crear las mariposas
+  set x0 105
+  set y0 135
 
-    ifelse elev1 > elev2
-    [set elevation elev1]
-    [set elevation elev2]
+  ; Asignar elevación de cada patch mediante archivo
+  file-open "ElevationData.txt"
+  while [ not file-at-end? ]
+  [
+    let next-X file-read
+    let next-Y file-read
+    let next-elevation file-read
+    ask patch next-X next-Y [
+      set elevation next-elevation
+      set used? false
+    ]
+  ]
+  file-close
+  ; Configurar color de patches
+  ask patches [
+    let min-elevation min [elevation] of patches
+    let max-elevation max [elevation] of patches
+    set pcolor scale-color gray elevation min-elevation max-elevation
+  ]
 
-    set pcolor scale-color green elevation 0 100
+  ; Asignar elevacion de cada patch con función original
+  ;ask patches
+  ;[ ; La primera colina se encuentra en (30, 30) con altura 100
+  ;  ; La segunda se ubica en (120, 100) y su altura es 50
+  ;  ; The first hill is 100 units high.
 
-    set used? false
-  ] ; fin configuracion de patches
+  ;  let elev1 100 - distancexy 30 30
+  ;  let elev2 50 - distancexy 120 100
+
+  ;  ifelse elev1 > elev2
+  ;  [set elevation elev1]
+  ;  [set elevation elev2]
+
+  ;  set pcolor scale-color green elevation 0 100
+
+  ;  set used? false
+  ;] ; fin configuracion de patches
 
   ; Crear agente(s)
   crt 50
   [
     set size 2
-    setxy 85 95 ; Posicion inicial
+    let x choose-initial-x
+    let y choose-initial-y
+    setxy x y ; Posicion inicial
     pen-down
 
     set start-patch patch-here
@@ -65,11 +92,15 @@ to-report corridor-width
 end
 
 
+
 to move ; Proceso para mover las mariposas
         ; Decidiendo si moverse directamente al punto más alto
         ; o a un punto aledaño cualquiera, con probabilidad q
-  if elevation >= [ elevation ] of max-one-of neighbors [ elevation ]
-  [ stop ] ; La mariposa se detiene cuando llega a alguna cima
+
+  ; En un paisaje real, conviene que las mariposas no se estanquen
+  ; en puntos máximos locales. Entonces, comentamos esta linea:
+  ;if elevation >= [ elevation ] of max-one-of neighbors [ elevation ]
+  ;[ stop ] ; La mariposa se detiene cuando llega a alguna cima
 
   ifelse random-float 1 < q
   [ uphill elevation ] ; Moverse deterministicamente colina arriba (uphill)
@@ -78,6 +109,26 @@ to move ; Proceso para mover las mariposas
   ; Marcar el patch al cual se ha desplazado la mariposa como visitado
   set used? true
 end ; of move procedure
+
+
+
+; Funciones llamadas para establecer posición inicial de cada mariposa
+; En este caso, las mariposas se ubican en una región de 10x10 patches
+; con centro en (x0,y0)
+to-report choose-initial-x
+  let min-x (x0 - 5)
+  let max-x (x0 + 4)
+  let initial-x (min-x + (random (max-x - min-x + 1)))
+
+  report initial-x
+end
+to-report choose-initial-y
+  let min-y (y0 - 5)
+  let max-y (y0 + 4)
+  let initial-y (min-y + (random (max-y - min-y + 1)))
+
+  report initial-y
+end
 
 @#$#@#$#@
 GRAPHICS-WINDOW
