@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Calendar>
+  <Version>3.2.0.0</Version>
+  <DisplayDate>5/25/2024 5:31:00 PM</DisplayDate>
+  <Shifts>
+    <BaseShift>
+      <Name>C:\Users\David\OneDrive\Escritorio\Cindy.sft</Name>
+      <Guid>76206e97-118b-4633-8c53-c3440952f1b0</Guid>
+      <Color>-1</Color>
+      <Data>s:0.8.0-0.10.0</Data>
+      <Data>s:0.10.15-0.12.0</Data>
+      <Data>s:0.13.0-0.15.0</Data>
+      <Data>s:0.15.15-0.17.0</Data>
+      <Data>s:1.8.0-1.10.0</Data>
+      <Data>s:1.10.15-1.12.0</Data>
+      <Data>s:1.13.0-1.15.0</Data>
+      <Data>s:1.15.15-1.17.0</Data>
+      <Data>s:2.8.0-2.10.0</Data>
+      <Data>s:2.10.15-2.12.0</Data>
+      <Data>s:2.13.0-2.15.0</Data>
+      <Data>s:2.15.15-2.17.0</Data>
+      <Data>s:3.8.0-3.10.0</Data>
+      <Data>s:3.10.15-3.12.0</Data>
+      <Data>s:3.13.0-3.15.0</Data>
+      <Data>s:3.15.15-3.17.0</Data>
+      <Data>s:4.8.0-4.10.0</Data>
+      <Data>s:4.10.15-4.12.0</Data>
+      <Data>s:4.13.0-4.15.0</Data>
+      <Data>s:4.15.15-4.17.0</Data>
+      <Data>s:5.8.0-5.10.0</Data>
+      <Data>s:5.10.15-5.12.0</Data>
+      <Data>s:5.13.0-5.15.0</Data>
+      <Data>s:5.15.15-5.17.0</Data>
+      <Data>s:6.8.0-6.10.0</Data>
+      <Data>s:6.10.15-6.12.0</Data>
+      <Data>s:6.13.0-6.15.0</Data>
+      <Data>s:6.15.15-6.17.0</Data>
+    </BaseShift>
+  </Shifts>
+  <Exceptions />
+</Calendar>
