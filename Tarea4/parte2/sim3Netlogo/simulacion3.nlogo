@@ -1,9 +1,9 @@
-globals [ num-hospitals num-ambulances next-event-ticks death-counter ambulance-speed]
+globals [ num-hospitals num-ambulances mean-interarrival next-event-ticks death-counter ambulance-speed]
 breed [ ambulances ambulance ]
 breed [ people person ]
 
 ambulances-own [ hospital available? patient]
-people-own [ birth-ticks death-ticks chosen-ambulance ]
+people-own [ birth-ticks death-ticks chosen-ambulance at-hospital? ]
 
 to setup
   clear-all
@@ -11,6 +11,7 @@ to setup
   ; Initialize global variables
   set num-hospitals 5
   set num-ambulances 5
+  set mean-interarrival 25
   set next-event-ticks 0
   set ambulance-speed 0.5
   ;set agent-size 2
@@ -52,14 +53,17 @@ to go
       set birth-ticks ticks ; Set birth in actual time
       set death-ticks -1
       set chosen-ambulance nobody
+      set at-hospital? false
       move-to one-of patches with [ pcolor != cyan ]
     ]
     ; DELETE LATER TEST AMBULANCE
     ask ambulance 2 [
     set available? true
     ;set patient one-of people
-  ]
+    ]
+
     ; Set next event time
+    set next-event-ticks (choose-next-event-ticks)
   ]
 
 
@@ -112,10 +116,27 @@ to go
 
 
       ; Check if the agents have arrived at the hospital and thus make the ambulance available
-      if patch-here = hospital[ make-available ]
+      if patch-here = hospital[
+        ask patient [ set at-hospital? true ]
+        make-available
+      ]
     ]
   ]
-  tick
+
+
+  ; Advance clock to next event if there are no patients left unattended
+  let num_unattended (count people with [ at-hospital? = false ])
+  ifelse num_unattended = 0
+  [ tick-advance (next-event-ticks - ticks) ]
+  [ tick ]
+end
+
+
+to-report choose-next-event-ticks
+  ; It's temporarily deterministic
+  let interarrival-ticks (mean-interarrival)
+
+  report (ticks + interarrival-ticks)
 end
 
 
