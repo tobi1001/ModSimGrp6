@@ -1,66 +1,179 @@
-globals [ q ]
-patches-own [ elevation ]
-turtles-own [ ]
+; globals [ num-hospitals num-ambulances limit-capacity? num-capacity]
+globals [ stop-ticks interarrival-time mean-survival-time max-new-people next-event-ticks total-patients death-counter ambulance-speed]
+breed [ ambulances ambulance ]
+breed [ people person ]
+
+ambulances-own [ hospital available? patient]
+people-own [ birth-ticks death-ticks chosen-ambulance at-hospital? ]
 
 to setup
   clear-all
-  ; Asignar elevacion de cada patch
-  ask patches
-  [ ; La primera colina se encuentra en (30, 30) con altura 100
-    ; La segunda se ubica en (120, 100) y su altura es 50
-    ; The first hill is 100 units high.
 
-    let elev1 100 - distancexy 30 30
-    let elev2 50 - distancexy 120 100
+  ; Initialize global variables
+  set stop-ticks (3600 * 2) ; seconds of simulation. 1 tick = 1 second
+  set interarrival-time 25 ; seconds
+  set max-new-people 5 ; maximum quantity of people created each hour
+  set mean-survival-time 28 ; seconds
+  set next-event-ticks 0
+  set ambulance-speed 0.5
+  ;set num-hospitals 5
+  ;set num-ambulances 5
 
-    ifelse elev1 > elev2
-    [set elevation elev1]
-    [set elevation elev2]
 
-    set pcolor scale-color green elevation 0 100
-  ] ; fin configuracion de patches
-
-  ; Crear agente(s)
-  crt 1
-  [
-    set size 2
-    setxy 85 95 ; Posicion inicial
-    pen-down
+  ; Set the background's appearance
+  ask patches[
+    set pcolor white
   ]
 
-  ; Inicializar el parametro "q"
-  set q 0.4
+
+  ; Create the required hospital-patches and their ambulances
+  ask n-of num-hospitals patches [
+    set pcolor cyan ; Cyan patches represent the hospitals
+
+    ; Create the ambulances within each hospital
+    sprout num-ambulances [
+      set breed ambulances
+      set color gray
+      set size 2.5
+      set hospital myself
+      set available? true
+      set patient nobody
+      hide-turtle ; Optional: to avoid visual clutter
+    ]
+  ]
 
   reset-ticks
-end ; del setup
-
-
-
-to go
-  ask turtles [move]
-  tick
-  if ticks >= 1000 [stop]
 end
 
 
+to go
+  if ticks = stop-ticks [
+    output-print (death-counter * 100 / total-patients)
+    stop
+  ]
 
-to move ; Proceso para mover las mariposas
-        ; Decidiendo si moverse directamente al punto más alto
-        ; o a un punto aledaño cualquiera, con probabilidad q
-  ifelse random-float 1 < q
-  [ uphill elevation ] ; Moverse deterministicamente colina arriba (uphill)
-  [ move-to one-of neighbors ] ; Or move randomly
-end ; of move procedure
 
+  ; Check if new injured people must be created
+  if ticks = next-event-ticks [
+    ; Create new people
+    let n (choose-num-people)
+    create-people n [
+      set color red
+      set shape "person"
+      set size 2
+      set birth-ticks ticks ; Set birth in actual time
+      set death-ticks (choose-death-time)
+      set chosen-ambulance nobody
+      set at-hospital? false
+      move-to one-of patches with [ pcolor != cyan ]
+    ]
+
+    ; Update total patients created
+    set total-patients (total-patients + n)
+
+    ; Set next event time
+    set next-event-ticks (choose-next-event-ticks)
+  ]
+
+
+  ; Check if any unattended person has died
+  let dead-set people with [ at-hospital? = false and death-ticks = ticks]
+  set death-counter (death-counter + count dead-set) ; Increase the counter
+  ask dead-set [
+    ask chosen-ambulance [ make-available ]
+    die
+  ]
+
+
+  ; Assign available ambulances to people, if there are any
+  ask people with [ chosen-ambulance = nobody ][
+    let available-ambulances (ambulances with [ available? = true ])
+    if any? available-ambulances [
+      ; Choose the nearest ambulance
+      set chosen-ambulance min-one-of available-ambulances [ distance myself ]
+      ask chosen-ambulance [
+        set patient myself
+        set available? false
+      ]
+    ]
+  ]
+
+
+  ; Move busy ambulances
+  ask ambulances with [ available? = false ] [
+    show-turtle
+
+    ifelse distance patient > 1 ; The ambulance hasn't yet picked up the patient
+    [
+      ; Move the ambulance towards the patient
+      face patient
+      forward ambulance-speed
+    ]
+    [
+      ; Move both the ambulance and the patient towards the hospital
+      set color green ; Mark in green the ambulances that are currently carrying patients
+      face hospital
+      forward ambulance-speed
+
+      ask patient [
+        set death-ticks -1 ; Set the patient's death time as indefinite (-1)
+
+        hide-turtle ; Optional: to avoid visual clutter
+        face [hospital] of myself
+        forward ambulance-speed
+      ]
+
+
+      ; Check if the agents have arrived at the hospital and thus make the ambulance available
+      if patch-here = hospital[
+        ask patient [ set at-hospital? true ]
+        make-available
+      ]
+    ]
+  ]
+
+
+  ; Advance clock to next event if there are no patients left unattended
+  let num_unattended (count people with [ at-hospital? = false ])
+  ifelse num_unattended = 0
+  [ tick-advance (next-event-ticks - ticks) ]
+  [ tick ]
+end
+
+
+to-report choose-death-time
+  ; It's temporarily deterministic
+  report (ticks + mean-survival-time)
+end
+
+
+to-report choose-num-people
+  ; It's temporarily deterministic
+  report (max-new-people)
+end
+
+
+to-report choose-next-event-ticks
+  report (ticks + interarrival-time)
+end
+
+
+to make-available
+  set color gray
+  set available? true
+  set patient nobody
+  move-to hospital
+  hide-turtle ; Optional: to avoid visual clutter
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-668
-469
+561
+14
+969
+423
 -1
 -1
-3.0
+10.0
 1
 10
 1
@@ -71,9 +184,9 @@ GRAPHICS-WINDOW
 0
 1
 0
-149
+39
 0
-149
+39
 0
 0
 1
@@ -81,27 +194,10 @@ ticks
 30.0
 
 BUTTON
-101
-92
-164
-125
-NIL
-go
-T
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
 14
-92
+288
 77
-125
+321
 NIL
 setup
 NIL
@@ -114,47 +210,179 @@ NIL
 NIL
 1
 
+BUTTON
+97
+289
+160
+322
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+TEXTBOX
+10
+12
+160
+31
+AMBULANCE MODEL
+15
+0.0
+1
+
+TEXTBOX
+232
+44
+461
+62
+Set the number of ambulances per hospital:
+10
+0.0
+1
+
+TEXTBOX
+10
+44
+206
+62
+Set the number of hospitals (< 1600):
+10
+0.0
+1
+
+INPUTBOX
+9
+67
+201
+127
+num-hospitals
+5.0
+1
+0
+Number
+
+INPUTBOX
+234
+66
+425
+126
+num-ambulances
+5.0
+1
+0
+Number
+
+INPUTBOX
+97
+176
+273
+236
+num-capacity
+0.0
+1
+0
+Number
+
+INPUTBOX
+11
+176
+89
+236
+limit-capacity?
+n
+1
+0
+String
+
+TEXTBOX
+12
+152
+307
+178
+Do you want to set a patient capacity per hospital? (y/n)
+10
+0.0
+1
+
+TEXTBOX
+172
+300
+322
+318
+Run for 8 hours
+10
+0.0
+1
+
+TEXTBOX
+126
+391
+309
+423
+Percentage of deceased patients at the end of simulation
+13
+0.0
+1
+
+OUTPUT
+15
+385
+110
+437
+13
+
+TEXTBOX
+15
+349
+165
+368
+Results
+15
+0.0
+1
+
 @#$#@#$#@
-# Butterfly Model ODD Description
-This file describes the model of Pe’er et al. (2005). The description is taken from Section 3.4 of Railsback and Grimm (2019). The file uses the markup language used by NetLogo's Info tab starting with NetLogo version 5.0.
+## WHAT IS IT?
 
-## 1. Purpose and patterns
-The model was designed to explore questions about virtual corridors. Under what conditions do the interactions of butterfly hilltopping behavior and landscape topography lead to the emergence of virtual corridors, that is, relatively narrow paths along which many butterflies move? How does variability in the butterflies’ tendency to move uphill affect the emergence of virtual corridors? This model does not represent a specific place or species of butterfly, so only general patterns are used as criteria for its usefulness for answering these questions: that butterflies can reach hilltops, and that their movement has a strong stochastic element representing the effects of factors other than elevation.
+Hasta aquí el modelo tiene lista la lógica de movimiento de los agentes y la creación de una sola tanda de personas
+## HOW IT WORKS
 
-## 2. Entities, State Variables, and Scales
-The model has two kinds of entities: butterflies and square patches of land. The patches make up a square grid landscape of 150 × 150 patches, and each patch has one state variable: its elevation. Butterflies are characterized only by their location, described as the patch they are on. Therefore, butterfly locations are in discrete units, the x- and y- coordinates of the center of their patch. Patch size and the length of one time step in the simulation are not specified because the model is generic, but when real landscapes are used, a patch corresponds to 25 × 25 m<sup>2</sup>. Simulations last for 1000 time steps; the length of one time step is not specified but should be about the time it takes a butterfly to move 25–35 m (the distance from one cell to one of its neighbor cells).
+(what rules the agents use to create the overall behavior of the model)
 
-## 3. Process Overview and Scheduling
-There is only one process in the model: movement of the butterflies. On each time step, each butterfly moves once. The order in which the butterflies execute this action is unimportant because there are no interactions among the butterflies.
+## HOW TO USE IT
 
-## 4. Design Concepts
-The _basic principle_ addressed by this model is the concept of virtual corridors—pathways used by many individuals when there is nothing particularly beneficial about the habitat in them. This concept is addressed by seeing when corridors _emerge_ from two parts of the model: the adaptive movement behavior of butterflies and the landscape they move through. This _adaptive behavior_ is modeled via a simple empirical rule that reproduces the behavior observed in real butterflies: moving uphill. This behavior is based on the understanding (not included in the model) that moving uphill leads to mating, which conveys fitness (success at passing on genes, the presumed ultimate objective of organisms). Because the hilltopping behavior is assumed a priori to be the objective of the butterflies, the concepts of _Objectives_ and _Prediction_ are not explicitly considered. There is no _learning_ in the model.
+(how to use the model, including a description of each of the items in the Interface tab)
 
-_Sensing_ is important in this model: butterflies are assumed able to identify which of the surrounding patches has the highest elevation, but to use no information about elevation at further distances. (The field studies of Pe’er 2003 addressed this question of how far butterflies sense elevation differences.)
+## THINGS TO NOTICE
 
-The model does not include _interaction_ among butterflies; in field studies, Pe’er (2003) found that real butterflies do interact (they sometimes stop to visit each other on the way uphill) but decided it is not important to include interaction in a model of virtual corridors.
+(suggested things for the user to notice while running the model)
 
-_Stochasticity_ is used to represent two sources of variability in movement that are too complex to represent mechanistically. Real butterflies do not always move directly uphill, likely because of (1) limits in the ability of the butterflies to sense the highest area in their neighborhood, and (2) factors other than topography (e.g., flowers that need investigation along the way) that influence movement direction. This variability is represented by assuming butterflies do not move uphill every time step; sometimes they move randomly instead. Whether a butterfly moves directly uphill or randomly at any time step is modeled stochastically, using a parameter _q_ that is the probability of an individual moving directly uphillinstead of randomly.
+## THINGS TO TRY
 
-_Collectives_ are not represented in this model.
+(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
 
-To allow _observation_ of the two patterns used to define the model’s usefulness, we use graphical display of topography and butterfly locations. Observing virtual corridors requires a specific “corridor width” measure that characterizes the width of butterfly paths from their starting patches to hilltops.
+## EXTENDING THE MODEL
 
-## 5. Initialization
-The topography of the landscape (the elevation of each patch) is initialized when the model starts. Two kinds of landscapes are used in different versions of the model: (1) a simple artificial topography, and (2) the topography of a real study site, imported from a file containing elevation values for each patch. The butterflies are initialized by creating five hundred of them and dispersing them throughout the landscape: each butterfly’s initial location is set to a patch selected randomly from among all patches.
+(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
 
-## 6. Input Data
-The environment is assumed to be constant, so the model has no input data.
+## NETLOGO FEATURES
 
-## 7. Submodels
-The movement submodel defines exactly how butterflies decide whether to move uphill or randomly. First, to “move uphill” is defined specifically as moving to the neighbor patch that has the highest elevation; if two patches have the same elevation, one is chosen randomly. “Move randomly” is defined as moving to one of the neighboring patches, with equal probability of choosing any patch. “Neighbor patches” are the eight patches surrounding the butterfly’s current patch. The decision of whether to move uphill or randomly is controlled by the parameter _q_, which ranges from 0.0 to 1.0 (_q_ is a global variable: all butterflies use the same value). On each time step, each butterfly draws a random number from a uniform distribution between 0.0 and 1.0. If this random number is less than _q_, the butterfly moves uphill; otherwise, the butterfly moves randomly.
+(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+
+## RELATED MODELS
+
+(models in the NetLogo Models Library and elsewhere which are of related interest)
 
 ## CREDITS AND REFERENCES
-Pe’er, G., Saltz, D. & Frank, K. 2005. Virtual corridors for conservation management. _Conservation Biology_, 19, 1997–2003.
 
-Pe’er, G. 2003. Spatial and behavioral determinants of butterfly movement patterns in topographically complex landscapes. Ph.D. thesis, Ben-Gurion University of the Negev.
-
-Railsback, S. & Grimm, V. 2018. _Agent-based and individual-based modeling: A practical introduction, Second edition_. Princeton University Press, Princeton, NJ.
+(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
 @#$#@#$#@
 default
 true
@@ -165,6 +393,27 @@ airplane
 true
 0
 Polygon -7500403 true true 150 0 135 15 120 60 120 105 15 165 15 195 120 180 135 240 105 270 120 285 150 270 180 285 210 270 165 240 180 180 285 195 285 165 180 105 180 60 165 15
+
+ambulance
+false
+0
+Rectangle -7500403 true true 30 90 210 195
+Polygon -7500403 true true 296 190 296 150 259 134 244 104 210 105 210 190
+Rectangle -1 true false 195 60 195 105
+Polygon -16777216 true false 238 112 252 141 219 141 218 112
+Circle -16777216 true false 234 174 42
+Circle -16777216 true false 69 174 42
+Rectangle -1 true false 288 158 297 173
+Rectangle -1184463 true false 289 180 298 172
+Rectangle -2674135 true false 29 151 298 158
+Line -16777216 false 210 90 210 195
+Rectangle -16777216 true false 83 116 128 133
+Rectangle -16777216 true false 153 111 176 134
+Line -7500403 true 165 105 165 135
+Rectangle -7500403 true true 14 186 33 195
+Line -13345367 false 45 135 75 120
+Line -13345367 false 75 135 45 120
+Line -13345367 false 60 112 60 142
 
 arrow
 true

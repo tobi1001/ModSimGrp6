@@ -1,4 +1,5 @@
-globals [ num-hospitals num-ambulances mean-interarrival next-event-ticks death-counter ambulance-speed]
+; globals [ num-hospitals num-ambulances limit-capacity? num-capacity]
+globals [ stop-ticks interarrival-time mean-survival-time max-new-people next-event-ticks total-patients death-counter ambulance-speed]
 breed [ ambulances ambulance ]
 breed [ people person ]
 
@@ -9,12 +10,14 @@ to setup
   clear-all
 
   ; Initialize global variables
-  set num-hospitals 5
-  set num-ambulances 5
-  set mean-interarrival 25
+  set stop-ticks (3600 * 2) ; seconds of simulation. 1 tick = 1 second
+  set interarrival-time 25 ; seconds
+  set max-new-people 5 ; maximum quantity of people created each hour
+  set mean-survival-time 28 ; seconds
   set next-event-ticks 0
   set ambulance-speed 0.5
-  ;set agent-size 2
+  ;set num-hospitals 5
+  ;set num-ambulances 5
 
 
   ; Set the background's appearance
@@ -42,25 +45,31 @@ to setup
   reset-ticks
 end
 
+
 to go
+  if ticks = stop-ticks [
+    output-print (death-counter * 100 / total-patients)
+    stop
+  ]
+
+
   ; Check if new injured people must be created
   if ticks = next-event-ticks [
     ; Create new people
-    create-people 5[
+    let n (choose-num-people)
+    create-people n [
       set color red
       set shape "person"
       set size 2
       set birth-ticks ticks ; Set birth in actual time
-      set death-ticks -1
+      set death-ticks (choose-death-time)
       set chosen-ambulance nobody
       set at-hospital? false
       move-to one-of patches with [ pcolor != cyan ]
     ]
-    ; DELETE LATER TEST AMBULANCE
-    ask ambulance 2 [
-    set available? true
-    ;set patient one-of people
-    ]
+
+    ; Update total patients created
+    set total-patients (total-patients + n)
 
     ; Set next event time
     set next-event-ticks (choose-next-event-ticks)
@@ -68,7 +77,7 @@ to go
 
 
   ; Check if any unattended person has died
-  let dead-set people with [ death-ticks = ticks ]
+  let dead-set people with [ at-hospital? = false and death-ticks = ticks]
   set death-counter (death-counter + count dead-set) ; Increase the counter
   ask dead-set [
     ask chosen-ambulance [ make-available ]
@@ -132,11 +141,20 @@ to go
 end
 
 
-to-report choose-next-event-ticks
+to-report choose-death-time
   ; It's temporarily deterministic
-  let interarrival-ticks (mean-interarrival)
+  report (ticks + mean-survival-time)
+end
 
-  report (ticks + interarrival-ticks)
+
+to-report choose-num-people
+  ; It's temporarily deterministic
+  report (max-new-people)
+end
+
+
+to-report choose-next-event-ticks
+  report (ticks + interarrival-time)
 end
 
 
@@ -149,10 +167,10 @@ to make-available
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-618
-419
+561
+14
+969
+423
 -1
 -1
 10.0
@@ -176,10 +194,10 @@ ticks
 30.0
 
 BUTTON
-61
-55
-124
-88
+14
+288
+77
+321
 NIL
 setup
 NIL
@@ -193,10 +211,10 @@ NIL
 1
 
 BUTTON
-61
-108
-124
-141
+97
+289
+160
+322
 NIL
 go
 T
@@ -207,6 +225,117 @@ NIL
 NIL
 NIL
 NIL
+1
+
+TEXTBOX
+10
+12
+160
+31
+AMBULANCE MODEL
+15
+0.0
+1
+
+TEXTBOX
+232
+44
+461
+62
+Set the number of ambulances per hospital:
+10
+0.0
+1
+
+TEXTBOX
+10
+44
+206
+62
+Set the number of hospitals (< 1600):
+10
+0.0
+1
+
+INPUTBOX
+9
+67
+201
+127
+num-hospitals
+5.0
+1
+0
+Number
+
+INPUTBOX
+234
+66
+425
+126
+num-ambulances
+5.0
+1
+0
+Number
+
+INPUTBOX
+97
+176
+273
+236
+num-capacity
+0.0
+1
+0
+Number
+
+INPUTBOX
+11
+176
+89
+236
+limit-capacity?
+n
+1
+0
+String
+
+TEXTBOX
+12
+152
+307
+178
+Do you want to set a patient capacity per hospital? (y/n)
+10
+0.0
+1
+
+TEXTBOX
+126
+391
+309
+423
+Percentage of deceased patients at the end of simulation
+13
+0.0
+1
+
+OUTPUT
+15
+385
+110
+437
+13
+
+TEXTBOX
+15
+349
+165
+368
+Results
+15
+0.0
 1
 
 @#$#@#$#@
