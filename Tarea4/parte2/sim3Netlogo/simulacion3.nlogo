@@ -11,11 +11,13 @@ to setup
 
   ; Initialize global variables
   set stop-ticks (3600 * 2) ; seconds of simulation. 1 tick = 1 second
-  set interarrival-time 25 ; seconds
-  set max-new-people 5 ; maximum quantity of people created each hour
-  set mean-survival-time 28 ; seconds
+  set interarrival-time 60 ; seconds
+  set max-new-people 20 ; maximum quantity of people created each hour
+  set mean-survival-time 3 ; seconds
   set next-event-ticks 0
-  set ambulance-speed 0.5
+  set ambulance-speed 1
+  set death-counter 0
+  set total-patients 0
   ;set num-hospitals 5
   ;set num-ambulances 5
 
@@ -63,7 +65,7 @@ to go
       set size 2
       set birth-ticks ticks ; Set birth in actual time
       set death-ticks (choose-death-time)
-      set chosen-ambulance nobody
+      assign-ambulance
       set at-hospital? false
       move-to one-of patches with [ pcolor != cyan ]
     ]
@@ -77,25 +79,18 @@ to go
 
 
   ; Check if any unattended person has died
-  let dead-set people with [ at-hospital? = false and death-ticks = ticks]
+  let dead-set people with [ at-hospital? = false and chosen-ambulance = nobody and death-ticks = ticks]
   set death-counter (death-counter + count dead-set) ; Increase the counter
   ask dead-set [
-    ask chosen-ambulance [ make-available ]
+    print "died"
+    if chosen-ambulance != nobody [ask chosen-ambulance [ make-available ]]
     die
   ]
 
 
-  ; Assign available ambulances to people, if there are any
+  ; Assign available ambulances to people that need it, if there are any
   ask people with [ chosen-ambulance = nobody ][
-    let available-ambulances (ambulances with [ available? = true ])
-    if any? available-ambulances [
-      ; Choose the nearest ambulance
-      set chosen-ambulance min-one-of available-ambulances [ distance myself ]
-      ask chosen-ambulance [
-        set patient myself
-        set available? false
-      ]
-    ]
+    assign-ambulance
   ]
 
 
@@ -142,19 +137,33 @@ end
 
 
 to-report choose-death-time
-  ; It's temporarily deterministic
-  report (ticks + mean-survival-time)
+  let survival random-exponential mean-survival-time
+  report (ticks + round survival)
 end
 
 
 to-report choose-num-people
-  ; It's temporarily deterministic
-  report (max-new-people)
+  report random (max-new-people + 1) ; Create number uniformly from 0 to max-new-people
 end
 
 
 to-report choose-next-event-ticks
   report (ticks + interarrival-time)
+end
+
+
+to assign-ambulance
+  let available-ambulances (ambulances with [ available? = true ])
+
+  ifelse any? available-ambulances [
+    ; Choose the nearest ambulance
+    set chosen-ambulance min-one-of available-ambulances [ distance myself ]
+    ask chosen-ambulance [
+      set patient myself
+      set available? false
+    ]
+  ]
+  [ set chosen-ambulance nobody ] ; else
 end
 
 
@@ -274,7 +283,7 @@ INPUTBOX
 425
 126
 num-ambulances
-5.0
+3.0
 1
 0
 Number
@@ -337,6 +346,17 @@ Results
 15
 0.0
 1
+
+MONITOR
+346
+387
+513
+432
+NIL
+death-counter
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -704,6 +724,23 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="ParteA" repetitions="6" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>(death-counter * 100 / total-patients)</metric>
+    <enumeratedValueSet variable="num-capacity">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-hospitals">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="num-ambulances" first="5" step="5" last="30"/>
+    <enumeratedValueSet variable="limit-capacity?">
+      <value value="&quot;n&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
