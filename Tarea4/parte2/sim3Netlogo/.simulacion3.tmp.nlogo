@@ -84,6 +84,7 @@ to go
   let dead-set people with [ at-hospital? = false and chosen-ambulance = nobody and death-ticks = ticks]
   set death-counter (death-counter + count dead-set) ; Increase the counter
   ask dead-set [
+    print "died"
     if chosen-ambulance != nobody [ask chosen-ambulance [ make-available ]]
     die
   ]
@@ -158,7 +159,7 @@ to assign-ambulance
   let available-ambulances (ambulances with [ available? = true ])
   if limit-capacity? = "y"
   [ ; Add the condition that the potential hospitals have space available
-    print "yes"
+
     set available-ambulances (available-ambulances with [ [patient-counter] of hospital <= num-capacity])
   ]
 
