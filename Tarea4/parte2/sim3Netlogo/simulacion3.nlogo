@@ -1,5 +1,6 @@
 ; globals [ num-hospitals num-ambulances limit-capacity? num-capacity]
-globals [ stop-ticks interarrival-time mean-survival-time max-new-people next-event-ticks total-patients death-counter ambulance-speed]
+globals [ stop-ticks interarrival-time mean-survival-time max-new-people
+          next-event-ticks total-patients death-counter ambulance-speed]
 breed [ ambulances ambulance ]
 breed [ people person ]
 
@@ -11,7 +12,7 @@ to setup
   clear-all
 
   ; Initialize global variables
-  set stop-ticks (3600 * 2) ; seconds of simulation. 1 tick = 1 second
+  set stop-ticks (3600 * 8) ; seconds of simulation. 1 tick = 1 second
   set interarrival-time 60 ; seconds
   set max-new-people 20 ; maximum quantity of people created each hour
   set mean-survival-time 3 ; seconds
@@ -158,7 +159,6 @@ to assign-ambulance
   let available-ambulances (ambulances with [ available? = true ])
   if limit-capacity? = "y"
   [ ; Add the condition that the potential hospitals have space available
-    print "yes"
     set available-ambulances (available-ambulances with [ [patient-counter] of hospital <= num-capacity])
   ]
 
@@ -732,17 +732,18 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="ParteA" repetitions="6" runMetricsEveryStep="false">
+  <experiment name="ParteA" repetitions="10" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
     <metric>(death-counter * 100 / total-patients)</metric>
+    <metric>([patient-counter] of patches with [pcolor = cyan])</metric>
     <enumeratedValueSet variable="num-capacity">
       <value value="0"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-hospitals">
       <value value="5"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="num-ambulances" first="5" step="5" last="30"/>
+    <steppedValueSet variable="num-ambulances" first="1" step="1" last="5"/>
     <enumeratedValueSet variable="limit-capacity?">
       <value value="&quot;n&quot;"/>
     </enumeratedValueSet>
