@@ -14,15 +14,15 @@ to setup
 
   ; Initialize global variables
   set stop-ticks (3600 * 5) ; seconds of simulation. 1 tick = 1 second
-  set interarrival-time 60 ; seconds
-  set max-new-people 20 ; maximum quantity of people created each hour
-  set mean-survival-time 3 ; seconds
+  set interarrival-time 60  ; seconds
+  set max-new-people 20     ; maximum quantity of people created each hour
+  set mean-survival-time 3  ; seconds
   set next-event-ticks 0
   set ambulance-speed 1
   set death-counter 0
   set total-patients 0
-  set death-percentage -1
-  set max-patient-counter -1
+  set death-percentage -1    ; representing null
+  set max-patient-counter -1 ; representing null
 
 
   ; Set the background's appearance
@@ -75,7 +75,7 @@ to go
       set shape "person"
       set size 2
       set death-ticks (choose-death-time)
-      set chosen-ambulance nobody
+      assign-ambulance
       set at-hospital? false
       move-to one-of patches with [ pcolor != cyan ]
     ]
@@ -738,6 +738,22 @@ NetLogo 6.4.0
       <value value="5"/>
     </enumeratedValueSet>
     <steppedValueSet variable="num-ambulances" first="1" step="1" last="5"/>
+    <enumeratedValueSet variable="limit-capacity?">
+      <value value="&quot;n&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="ParteB" repetitions="10" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>death-percentage</metric>
+    <metric>max-patient-counter</metric>
+    <enumeratedValueSet variable="num-capacity">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="num-hospitals" first="1" step="1" last="5"/>
+    <enumeratedValueSet variable="num-ambulances">
+      <value value="5"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="limit-capacity?">
       <value value="&quot;n&quot;"/>
     </enumeratedValueSet>
