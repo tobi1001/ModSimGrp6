@@ -1,18 +1,19 @@
 ; globals [ num-hospitals num-ambulances limit-capacity? num-capacity]
 globals [ stop-ticks interarrival-time mean-survival-time max-new-people
-          next-event-ticks total-patients death-counter ambulance-speed]
+          next-event-ticks total-patients death-counter ambulance-speed
+          death-percentage max-patient-counter ]
 breed [ ambulances ambulance ]
 breed [ people person ]
 
 ambulances-own [ hospital available? patient]
-people-own [ birth-ticks death-ticks chosen-ambulance at-hospital? ]
+people-own [ death-ticks chosen-ambulance at-hospital? ]
 patches-own [ patient-counter ]
 
 to setup
   clear-all
 
   ; Initialize global variables
-  set stop-ticks (3600 * 8) ; seconds of simulation. 1 tick = 1 second
+  set stop-ticks (3600 * 5) ; seconds of simulation. 1 tick = 1 second
   set interarrival-time 60 ; seconds
   set max-new-people 20 ; maximum quantity of people created each hour
   set mean-survival-time 3 ; seconds
@@ -20,8 +21,8 @@ to setup
   set ambulance-speed 1
   set death-counter 0
   set total-patients 0
-  ;set num-hospitals 5
-  ;set num-ambulances 5
+  set death-percentage -1
+  set max-patient-counter -1
 
 
   ; Set the background's appearance
@@ -53,7 +54,14 @@ end
 
 to go
   if ticks = stop-ticks [
-    output-print (death-counter * 100 / total-patients)
+    set death-percentage precision (death-counter * 100 / total-patients) 2
+    set max-patient-counter (max [patient-counter] of patches with [pcolor = cyan])
+
+    output-print "Ratio of deceased patients:"
+    output-print (word death-percentage "%")
+    output-print "Max number of patient occupation:"
+    output-print (max-patient-counter)
+
     stop
   ]
 
@@ -66,9 +74,8 @@ to go
       set color red
       set shape "person"
       set size 2
-      set birth-ticks ticks ; Set birth in actual time
       set death-ticks (choose-death-time)
-      assign-ambulance
+      set chosen-ambulance nobody
       set at-hospital? false
       move-to one-of patches with [ pcolor != cyan ]
     ]
@@ -84,10 +91,7 @@ to go
   ; Check if any unattended person has died
   let dead-set people with [ at-hospital? = false and chosen-ambulance = nobody and death-ticks = ticks]
   set death-counter (death-counter + count dead-set) ; Increase the counter
-  ask dead-set [
-    if chosen-ambulance != nobody [ask chosen-ambulance [ make-available ]]
-    die
-  ]
+  ask dead-set [ die ]
 
 
   ; Assign available ambulances to people that need it, if there are any
@@ -327,21 +331,11 @@ Do you want to set a patient capacity per hospital? (y/n)
 0.0
 1
 
-TEXTBOX
-126
-391
-309
-423
-Percentage of deceased patients at the end of simulation
-13
-0.0
-1
-
 OUTPUT
 15
-385
-110
-437
+370
+361
+449
 13
 
 TEXTBOX
@@ -355,10 +349,10 @@ Results
 1
 
 MONITOR
-346
-387
-513
-432
+375
+384
+542
+429
 NIL
 death-counter
 17
@@ -735,8 +729,8 @@ NetLogo 6.4.0
   <experiment name="ParteA" repetitions="10" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
-    <metric>(death-counter * 100 / total-patients)</metric>
-    <metric>([patient-counter] of patches with [pcolor = cyan])</metric>
+    <metric>death-percentage</metric>
+    <metric>max-patient-counter</metric>
     <enumeratedValueSet variable="num-capacity">
       <value value="0"/>
     </enumeratedValueSet>
